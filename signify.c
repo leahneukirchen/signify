@@ -64,8 +64,8 @@ extern char *__progname;
 static void
 usage(void)
 {
-	fprintf(stderr, "usage: %s [-N] [-I input] [-P pubkey] [-S seckey] "
-	    "-V generate|sign|verify\n", __progname);
+	fprintf(stderr, "usage: %s [-N] [-I input] [-O output] [-P pubkey] [-S seckey] "
+	    "-V generate | sign | verify\n", __progname);
 	exit(1);
 }
 
