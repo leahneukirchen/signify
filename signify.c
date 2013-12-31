@@ -350,7 +350,7 @@ main(int argc, char **argv)
 		}
 	}
 	argc -= optind;
-	if (argc != 0)
+	if (argc != 0 || verb == NULL)
 		usage();
 
 	if (inputfile && !sigfile) {
