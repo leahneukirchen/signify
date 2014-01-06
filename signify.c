@@ -31,8 +31,6 @@
 
 #include "crypto_api.h"
 
-#define streq(a, b) (strcmp(a, b) == 0)
-
 #define SIGBYTES crypto_sign_ed25519_BYTES
 #define SECRETBYTES crypto_sign_ed25519_SECRETKEYBYTES
 #define PUBLICBYTES crypto_sign_ed25519_PUBLICKEYBYTES
