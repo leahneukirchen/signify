@@ -73,9 +73,9 @@ usage(void)
 	fprintf(stderr, "usage:"
 #ifndef VERIFYONLY
 	    "\t%s [-n] -p pubkey -s seckey -G\n"
-	    "\t%s [-e] [-o output] -s seckey -S input\n"
+	    "\t%s [-e] [-o output] -s seckey -S message\n"
 #endif
-	    "\t%s [-e] [-o output] -p pubkey -V input\n",
+	    "\t%s [-e] [-o output] -p pubkey -V message\n",
 #ifndef VERIFYONLY
 	    __progname, __progname, 
 #endif
