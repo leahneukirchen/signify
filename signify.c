@@ -177,7 +177,6 @@ readmsg(const char *filename, unsigned long long *msglenp)
 	return msg;
 }
 
-#ifndef VERIFYONLY
 static void
 writeall(int fd, const void *buf, size_t len, const char *filename)
 {
@@ -191,6 +190,7 @@ writeall(int fd, const void *buf, size_t len, const char *filename)
 	}
 }
 
+#ifndef VERIFYONLY
 static void
 appendall(const char *filename, const void *buf, size_t len)
 {
