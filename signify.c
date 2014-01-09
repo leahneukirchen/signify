@@ -214,7 +214,7 @@ writeb64file(const char *filename, const char *comment, const void *buf,
 	char b64[1024];
 	int fd, rv;
 
-	fd = xopen(filename, O_CREAT|O_EXCL|O_NOFOLLOW|O_RDWR, mode);
+	fd = xopen(filename, O_CREAT|O_TRUNC|O_NOFOLLOW|O_RDWR, mode);
 	snprintf(header, sizeof(header), "%ssignify %s\n", COMMENTHDR,
 	    comment);
 	writeall(fd, header, strlen(header), filename);
@@ -389,7 +389,7 @@ verify(const char *pubkeyfile, const char *msgfile, const char *sigfile,
 
 	verifymsg(pubkey.pubkey, msg, msglen, sig.sig);
 	if (embedded) {
-		fd = xopen(msgfile, O_CREAT|O_EXCL|O_NOFOLLOW|O_RDWR, 0666);
+		fd = xopen(msgfile, O_CREAT|O_TRUNC|O_NOFOLLOW|O_RDWR, 0666);
 		writeall(fd, msg, msglen, msgfile);
 		close(fd);
 	}
