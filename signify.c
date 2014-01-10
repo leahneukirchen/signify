@@ -421,8 +421,6 @@ verify(const char *pubkeyfile, const char *msgfile, const char *sigfile,
 		close(fd);
 	}
 
-	printf("verified\n");
-
 	free(msg - siglen);
 }
 
