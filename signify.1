@@ -118,10 +118,14 @@ Sign a file, specifying a signature name:
 .Pp
 Verify a signature, using the default signature name:
 .Dl $ signify -V -p key.pub generalsorders.txt
+.Pp
+Verify a release directory:
+.Dl $ signify -p /etc/signify/55base.pub -V SHA256 && sha256 -c SHA256
+.Pp
 .Sh SEE ALSO
-.Xr cmp 1 ,
-.Xr sha256 1 ,
-.Xr ssh 1
+.Xr fw_update 1 ,
+.Xr pkg_add 1 ,
+.Xr sha256 1
 .Sh HISTORY
 The
 .Nm
