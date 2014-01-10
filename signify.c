@@ -73,10 +73,10 @@ usage(void)
 	fprintf(stderr, "usage:"
 #ifndef VERIFYONLY
 	    "\t%s -G [-n] -p pubkey -s seckey\n"
-	    "\t%s -I [-o sig] [-p pubkey] [-s seckey]\n"
-	    "\t%s -S [-e] [-o output] -s seckey message\n"
+	    "\t%s -I [-o sigfile] [-p pubkey] [-s seckey]\n"
+	    "\t%s -S [-e] [-o sigfile] -s seckey message\n"
 #endif
-	    "\t%s -V [-e] [-o output] -p pubkey message\n",
+	    "\t%s -V [-e] [-o sigfile] -p pubkey message\n",
 #ifndef VERIFYONLY
 	    __progname, __progname, __progname,
 #endif
