@@ -168,7 +168,8 @@ readmsg(const char *filename, unsigned long long *msglenp)
 	int fd;
 
 	fd = xopen(filename, O_RDONLY | O_NOFOLLOW, 0);
-	fstat(fd, &sb);
+	if (fstat(fd, &sb) == -1)
+		err(1, "fstat on %s", filename);
 	msglen = sb.st_size;
 	if (msglen > (1UL << 30))
 		errx(1, "msg too large in %s", filename);
