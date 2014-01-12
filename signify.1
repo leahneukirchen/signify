@@ -123,7 +123,7 @@ Verify a signature, using the default signature name:
 .Dl $ signify -V -p key.pub generalsorders.txt
 .Pp
 Verify a release directory:
-.Dl $ signify -p /etc/signify/55base.pub -V SHA256 && sha256 -c SHA256
+.Dl $ signify -Vp /etc/signify/55base.pub SHA256 && sha256 -c SHA256
 .Sh SEE ALSO
 .Xr fw_update 1 ,
 .Xr pkg_add 1 ,
