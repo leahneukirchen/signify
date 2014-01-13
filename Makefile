@@ -7,7 +7,6 @@ SRCS=	signify.c
 SRCS+=	fe25519.c sc25519.c smult_curve25519_ref.c
 SRCS+=	mod_ed25519.c mod_ge25519.c
 SRCS+=	crypto_api.c
-SRCS+= base64.c
 
 PROG=	signify
 
