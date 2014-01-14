@@ -172,7 +172,7 @@ readb64file(const char *filename, void *buf, size_t len, char *comment)
 	close(fd);
 }
 
-uint8_t *
+static uint8_t *
 readmsg(const char *filename, unsigned long long *msglenp)
 {
 	unsigned long long msglen;
