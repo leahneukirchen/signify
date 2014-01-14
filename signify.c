@@ -23,6 +23,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <err.h>
 #include <unistd.h>
 #include <readpassphrase.h>
