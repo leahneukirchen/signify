@@ -255,8 +255,8 @@ kdf(uint8_t *salt, size_t saltlen, int rounds, uint8_t *key, size_t keylen)
 		return;
 	}
 
-	if (!readpassphrase("passphrase: ", pass, sizeof(pass), 0))
-		errx(1, "readpassphrase");
+	if (!readpassphrase("passphrase: ", pass, sizeof(pass), RPP_ECHO_OFF))
+		errx(1, "unable to read passphrase");
 	if (strlen(pass) == 0)
 		errx(1, "please provide a password");
 	if (bcrypt_pbkdf(pass, strlen(pass), salt, saltlen, key,
