@@ -75,7 +75,7 @@ usage(const char *error)
 		fprintf(stderr, "%s\n", error);
 	fprintf(stderr, "usage:"
 #ifndef VERIFYONLY
-	    "\t%1$s -C [-q] -p pubkey -x sigfile [files...]\n"
+	    "\t%1$s -C [-q] -p pubkey -x sigfile [file ...]\n"
 	    "\t%1$s -G [-n] [-c comment] -p pubkey -s seckey\n"
 	    "\t%1$s -I [-p pubkey] [-s seckey] [-x sigfile]\n"
 	    "\t%1$s -S [-e] [-x sigfile] -s seckey -m message\n"
