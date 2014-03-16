@@ -89,6 +89,7 @@ usage(const char *error)
 static int
 xopen(const char *fname, int flags, mode_t mode)
 {
+	struct stat sb;
 	int fd;
 
 	if (strcmp(fname, "-") == 0) {
@@ -104,6 +105,8 @@ xopen(const char *fname, int flags, mode_t mode)
 			err(1, "can't open %s for %s", fname,
 			    (flags & O_WRONLY) ? "writing" : "reading");
 	}
+	if (fstat(fd, &sb) == -1 || S_ISDIR(sb.st_mode))
+		errx(1, "can't use directory as file: %s", fname);
 	return fd;
 }
 
