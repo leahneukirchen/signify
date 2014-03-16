@@ -382,7 +382,8 @@ sign(const char *seckeyfile, const char *msgfile, const char *sigfile,
 	memcpy(sig.pkalg, PKALG, 2);
 	if ((secname = strstr(seckeyfile, ".sec")) && strlen(secname) == 4) {
 		if (snprintf(sigcomment, sizeof(sigcomment), VERIFYWITH "%.*s.pub",
-		    (int)strlen(seckeyfile) - 4, seckeyfile) >= sizeof(sigcomment));
+		    (int)strlen(seckeyfile) - 4, seckeyfile) >= sizeof(sigcomment))
+			err(1, "comment too long");
 	} else {
 		if (snprintf(sigcomment, sizeof(sigcomment), "signature from %s",
 		    comment) >= sizeof(sigcomment))
