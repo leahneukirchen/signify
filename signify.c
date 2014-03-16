@@ -595,6 +595,9 @@ check(const char *pubkeyfile, const char *sigfile, int quiet, int argc,
 	if (!pubkeyfile) {
 		if ((pubkeyfile = strstr(comment, VERIFYWITH)))
 			pubkeyfile += strlen(VERIFYWITH);
+			if (strncmp(pubkeyfile, "/etc/signify/", 13) != 0 ||
+			    strstr(pubkeyfile, "/../") != NULL)
+				errx(1, "untrusted path %s", pubkeyfile);
 		else
 			usage("need pubkey");
 	}
