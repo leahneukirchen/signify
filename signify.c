@@ -466,8 +466,8 @@ verify(const char *pubkeyfile, const char *msgfile, const char *sigfile,
 	if (!pubkeyfile) {
 		if ((pubkeyfile = strstr(comment, VERIFYWITH))) {
 			pubkeyfile += strlen(VERIFYWITH);
-			if (strstr(pubkeyfile, "/etc/signify") == NULL ||
-			    strstr(pubkeyfile, "..") != NULL)
+			if (strstr(pubkeyfile, "/etc/signify/") == NULL ||
+			    strstr(pubkeyfile, "/../") != NULL)
 				errx(1, "untrusted path %s", pubkeyfile);
 		} else
 			usage("need pubkey");
