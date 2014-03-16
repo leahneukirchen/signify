@@ -461,9 +461,12 @@ verify(const char *pubkeyfile, const char *msgfile, const char *sigfile,
 		readb64file(sigfile, &sig, sizeof(sig), comment);
 	}
 	if (!pubkeyfile) {
-		if ((pubkeyfile = strstr(comment, VERIFYWITH)))
+		if ((pubkeyfile = strstr(comment, VERIFYWITH))) {
 			pubkeyfile += strlen(VERIFYWITH);
-		else
+			if (strstr(pubkeyfile, "/etc/signify") == NULL ||
+			    strstr(pubkeyfile, "..") != NULL)
+				errx(1, "untrusted path %s", pubkeyfile);
+		} else
 			usage("need pubkey");
 	}
 	readb64file(pubkeyfile, &pubkey, sizeof(pubkey), NULL);
