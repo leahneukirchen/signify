@@ -189,7 +189,7 @@ readmsg(const char *filename, unsigned long long *msglenp)
 
 	while (1) {
 		if (space == 0) {
-			space = chunklen;
+			space = msglen + chunklen;
 			if (!(msg = realloc(msg, msglen + space + 1)))
 				errx(1, "realloc");
 		}
