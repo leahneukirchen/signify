@@ -719,8 +719,6 @@ main(int argc, char **argv)
 	}
 #endif
 
-	quiet = 1; /* retain quiet default for 5.5 release */
-
 	if (argc != 0)
 		usage(NULL);
 
