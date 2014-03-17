@@ -514,6 +514,7 @@ verify(const char *pubkeyfile, const char *msgfile, const char *sigfile,
 		msg = verifyembedded(pubkeyfile, sigfile, quiet, &msglen);
 		fd = xopen(msgfile, O_CREAT|O_TRUNC|O_NOFOLLOW|O_WRONLY, 0666);
 		writeall(fd, msg, msglen, msgfile);
+		free(msg);
 		close(fd);
 	} else {
 		verifysimple(pubkeyfile, msgfile, sigfile, quiet);
