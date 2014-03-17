@@ -591,7 +591,7 @@ check(const char *pubkeyfile, const char *sigfile, int quiet, int argc,
 
 	msg = readmsg(sigfile, &msglen);
 
-	siglen = parseb64file(sigfile, msg, &sig, sizeof(sig), NULL);
+	siglen = parseb64file(sigfile, msg, &sig, sizeof(sig), comment);
 	if (!pubkeyfile) {
 		if ((pubkeyfile = strstr(comment, VERIFYWITH)))
 			pubkeyfile += strlen(VERIFYWITH);
