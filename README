@@ -1,0 +1,6 @@
+This is a port of OpenBSD's signature tool signify(1) to Linux and other Unices.
+
+This port has no outside dependencies.
+It assumes /dev/urandom is a good source of entropy.
+
+This version actively tracks changes in the OpenBSD CVS repository.
