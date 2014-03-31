@@ -17,7 +17,6 @@
 #include <sys/stat.h>
 
 #include <netinet/in.h>
-#include <resolv.h>
 
 #include <stdint.h>
 #include <fcntl.h>
@@ -489,7 +488,7 @@ verifyembedded(const char *pubkeyfile, const char *sigfile,
 
 	msg = readmsg(sigfile, &msglen);
 
-	siglen = parseb64file(sigfile, msg, &sig, sizeof(sig), sigcomment);
+	siglen = parseb64file(sigfile, (char*)msg, &sig, sizeof(sig), sigcomment);
 	readpubkey(pubkeyfile, &pubkey, sigcomment);
 
 	msglen -= siglen;

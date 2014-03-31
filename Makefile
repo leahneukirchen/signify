@@ -1,18 +1,25 @@
-#	$OpenBSD$
+CFLAGS?= -Wall -O2 -funsigned-char -std=c89 -D_BSD_SOURCE -D_XOPEN_SOURCE=700
+CFLAGS+= -I.
 
-.PATH: ${.CURDIR}/../ssh
-CPPFLAGS += -I${.CURDIR}/../ssh
+OBJS=	crypto_api.o mod_ed25519.o mod_ge25519.o signify.o
+OBJS+=	arc4random.o base64.o bcrypt_pbkdf.o blowfish.o crypto_api.o
+OBJS+=	explicit_bzero.o fe25519.o mod_ed25519.o mod_ge25519.o rand_bytes.o
+OBJS+=	readpassphrase.o sc25519.o sha2.o sha256hl.o sha512hl.o
+OBJS+=	smult_curve25519_ref.o strlcpy.o timingsafe_bcmp.o
 
-SRCS=	signify.c
-SRCS+=	fe25519.c sc25519.c smult_curve25519_ref.c
-SRCS+=	mod_ed25519.c mod_ge25519.c
-SRCS+=	crypto_api.c
+all: signify
 
-PROG=	signify
+signify: $(OBJS)
 
-LDADD=  -lutil
-DPADD=  ${LIBUTIL}
+sha256hl.c: helper.c
+	sed -e 's/hashinc/sha2.h/g' \
+	    -e 's/HASH/SHA256/g' \
+	    -e 's/SHA[0-9][0-9][0-9]_CTX/SHA2_CTX/g' helper.c > sha256hl.c
 
-COPTS+=	-Wall
+sha512hl.c: helper.c
+	sed -e 's/hashinc/sha2.h/g' \
+	    -e 's/HASH/SHA512/g' \
+	    -e 's/SHA[0-9][0-9][0-9]_CTX/SHA2_CTX/g' helper.c > sha512hl.c
 
-.include <bsd.prog.mk>
+clean:
+	rm -f *.o signify
