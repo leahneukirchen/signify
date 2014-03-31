@@ -1,4 +1,4 @@
-CFLAGS?= -Wall -O2 -funsigned-char -std=c89 -D_BSD_SOURCE -D_XOPEN_SOURCE=700
+CFLAGS?= -Wall -O2
 CFLAGS+= -I.
 
 OBJS=	crypto_api.o mod_ed25519.o mod_ge25519.o signify.o
