@@ -1,5 +1,5 @@
 CC=	musl-gcc
-CFLAGS=	-Wall -Os -std=c89 -D_BSD_SOURCE -D_XOPEN_SOURCE=700
+CFLAGS=	-Wall -Os
 LDFLAGS=-static
 
 include Makefile
