@@ -1,3 +1,5 @@
+/* Christian Neukirchen, 2014.  Public domain. */
+
 #include <fcntl.h>
 #include <unistd.h>
 
