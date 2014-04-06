@@ -16,7 +16,7 @@
  */
 #include <sys/stat.h>
 
-#include <netinet/in.h>
+#include <arpa/inet.h>
 
 #include <stdint.h>
 #include <fcntl.h>
