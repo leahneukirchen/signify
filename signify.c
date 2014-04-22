@@ -549,8 +549,8 @@ verifychecksums(char *msg, int argc, char **argv, int quiet)
 
 	line = msg;
 	while (line && *line) {
-		if (!(checksums = realloc(checksums,
-		    sizeof(*c) * (nchecksums + 1))))
+		if (!(checksums = reallocarray(checksums,
+		    nchecksums + 1, sizeof(*checksums))))
 			err(1, "realloc");
 		c = &checksums[nchecksums++];
 		if ((endline = strchr(line, '\n')))
