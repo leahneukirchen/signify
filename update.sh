@@ -1,1 +1,1 @@
-GIT_MERGE_AUTOEDIT=no git cvsimport -o master -v -k -m -d :pserver:anoncvs:anoncvs@mirror.planetunix.net:/cvs src/usr.bin/signify
+GIT_MERGE_AUTOEDIT=no git cvsimport -o master -v -k -m -d anoncvs@openbsd.cs.fau.de:/cvs src/usr.bin/signify
