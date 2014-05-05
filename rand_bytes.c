@@ -13,5 +13,8 @@ int RAND_bytes(unsigned char *buf, int num)
 	r = read(fd, buf, num);
 	close(fd);
 
-	return r;
+	if (r != num)
+		return 1;
+	else
+		return 0;
 }
