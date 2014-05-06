@@ -544,7 +544,7 @@ verifychecksums(char *msg, int argc, char **argv, int quiet)
 	char *line, *endline;
 	struct checksum *checksums = NULL, *c = NULL;
 	int nchecksums = 0;
-	int i, j, uselist, count, hasfailed;
+	int i, j, rv, uselist, count, hasfailed;
 	int *failures;
 
 	line = msg;
@@ -554,10 +554,10 @@ verifychecksums(char *msg, int argc, char **argv, int quiet)
 			err(1, "realloc");
 		c = &checksums[nchecksums++];
 		if ((endline = strchr(line, '\n')))
-			*endline++ = 0;
-		if (sscanf(line, "%255s %1023s = %1023s",
-		    c->algo, buf, c->hash) != 3 ||
-		    buf[0] != '(' || buf[strlen(buf) - 1] != ')')
+			*endline++ = '\0';
+		rv = sscanf(line, "%255s %1023s = %1023s",
+		    c->algo, buf, c->hash);
+		if (rv != 3 || buf[0] != '(' || buf[strlen(buf) - 1] != ')')
 			errx(1, "unable to parse checksum line %s", line);
 		buf[strlen(buf) - 1] = 0;
 		strlcpy(c->file, buf + 1, sizeof(c->file));
