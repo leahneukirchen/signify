@@ -175,10 +175,11 @@ readmsg(const char *filename, unsigned long long *msglenp)
 	struct stat sb;
 	ssize_t x, space;
 	int fd;
+	const unsigned long long maxmsgsize = 1UL << 30;
 
 	fd = xopen(filename, O_RDONLY | O_NOFOLLOW, 0);
 	if (fstat(fd, &sb) == 0 && S_ISREG(sb.st_mode)) {
-		if (sb.st_size > (1UL << 30))
+		if (sb.st_size > maxmsgsize)
 			errx(1, "msg too large in %s", filename);
 		space = sb.st_size + 1;
 	} else {
@@ -188,7 +189,7 @@ readmsg(const char *filename, unsigned long long *msglenp)
 	msg = xmalloc(space + 1);
 	while (1) {
 		if (space == 0) {
-			if (msglen * 2 > (1UL << 30))
+			if (msglen * 2 > maxmsgsize)
 				errx(1, "msg too large in %s", filename);
 			space = msglen;
 			if (!(msg = realloc(msg, msglen + space + 1)))
