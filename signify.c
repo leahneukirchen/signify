@@ -572,7 +572,7 @@ verifychecksums(char *msg, int argc, char **argv, int quiet)
 		uselist = 1;
 		count = nchecksums;
 	}
-	if (!(failures = calloc(count, sizeof(int))))
+	if (!(failures = calloc(count, sizeof(*failures))))
 		err(1, "calloc");
 	for (i = 0; i < count; i++) {
 		if (uselist) {
