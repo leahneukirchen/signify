@@ -454,11 +454,12 @@ static void
 readpubkey(const char *pubkeyfile, struct pubkey *pubkey,
     const char *sigcomment)
 {
+	const char *safepath = "/etc/signify/";
 
 	if (!pubkeyfile) {
 		if ((pubkeyfile = strstr(sigcomment, VERIFYWITH))) {
 			pubkeyfile += strlen(VERIFYWITH);
-			if (strncmp(pubkeyfile, "/etc/signify/", 13) != 0 ||
+			if (strncmp(pubkeyfile, safepath, strlen(safepath)) != 0 ||
 			    strstr(pubkeyfile, "/../") != NULL)
 				errx(1, "untrusted path %s", pubkeyfile);
 		} else
