@@ -543,15 +543,18 @@ verifychecksums(char *msg, int argc, char **argv, int quiet)
 	char buf[1024];
 	char *line, *endline;
 	struct checksum *checksums = NULL, *c = NULL;
-	int nchecksums = 0;
+	int nchecksums = 0, checksumspace = 0;
 	int i, j, rv, uselist, count, hasfailed;
 	int *failures;
 
 	line = msg;
 	while (line && *line) {
-		if (!(checksums = reallocarray(checksums,
-		    nchecksums + 1, sizeof(*checksums))))
-			err(1, "realloc");
+		if (nchecksums == checksumspace) {
+			checksumspace = 2 * (nchecksums + 1);
+			if (!(checksums = reallocarray(checksums,
+			    checksumspace, sizeof(*checksums))))
+				err(1, "realloc");
+		}
 		c = &checksums[nchecksums++];
 		if ((endline = strchr(line, '\n')))
 			*endline++ = '\0';
