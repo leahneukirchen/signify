@@ -544,8 +544,8 @@ recodehash(char *hash)
 	uint8_t data[HASHBUFSIZE / 2];
 	int i, rv;
 
-	if (strlen(hash) == SHA256_DIGEST_STRING_LENGTH ||
-	    strlen(hash) == SHA512_DIGEST_STRING_LENGTH)
+	if (strlen(hash)+1 == SHA256_DIGEST_STRING_LENGTH ||
+	    strlen(hash)+1 == SHA512_DIGEST_STRING_LENGTH)
 		return;
 	if ((rv = b64_pton(hash, data, sizeof(data))) == -1)
 		errx(1, "invalid base64 encoding");
