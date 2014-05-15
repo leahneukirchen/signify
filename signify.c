@@ -139,10 +139,10 @@ parseb64file(const char *filename, char *b64, void *buf, size_t buflen,
 	}
 	b64end = strchr(commentend + 1, '\n');
 	if (!b64end)
-		errx(1, "missing new line after b64 in %s", filename);
+		errx(1, "missing new line after base64 in %s", filename);
 	*b64end = '\0';
 	if (b64_pton(commentend + 1, buf, buflen) != buflen)
-		errx(1, "invalid b64 encoding in %s", filename);
+		errx(1, "invalid base64 encoding in %s", filename);
 	if (memcmp(buf, PKALG, 2) != 0)
 		errx(1, "unsupported file %s", filename);
 	return b64end - b64 + 1;
@@ -236,7 +236,7 @@ writeb64file(const char *filename, const char *comment, const void *buf,
 		errx(1, "comment too long");
 	writeall(fd, header, strlen(header), filename);
 	if ((rv = b64_ntop(buf, buflen, b64, sizeof(b64)-1)) == -1)
-		errx(1, "b64 encode failed");
+		errx(1, "base64 encode failed");
 	b64[rv++] = '\n';
 	writeall(fd, b64, rv, filename);
 	explicit_bzero(b64, sizeof(b64));
@@ -530,11 +530,27 @@ verify(const char *pubkeyfile, const char *msgfile, const char *sigfile,
 }
 
 #ifndef VERIFYONLY
+#define HASHBUFSIZE 224
 struct checksum {
 	char file[1024];
-	char hash[1024];
-	char algo[256];
+	char hash[HASHBUFSIZE];
+	char algo[32];
 };
+
+static void
+recodehash(char *hash)
+{
+	uint8_t data[HASHBUFSIZE / 2];
+	int i, rv;
+
+	if (strlen(hash)+1 == SHA256_DIGEST_STRING_LENGTH ||
+	    strlen(hash)+1 == SHA512_DIGEST_STRING_LENGTH)
+		return;
+	if ((rv = b64_pton(hash, data, sizeof(data))) == -1)
+		errx(1, "invalid base64 encoding");
+	for (i = 0; i < rv; i++)
+		snprintf(hash + i * 2, HASHBUFSIZE - i * 2, "%2.2x", data[i]);
+}
 
 static void
 verifychecksums(char *msg, int argc, char **argv, int quiet)
@@ -542,22 +558,26 @@ verifychecksums(char *msg, int argc, char **argv, int quiet)
 	char buf[1024];
 	char *line, *endline;
 	struct checksum *checksums = NULL, *c = NULL;
-	int nchecksums = 0;
+	int nchecksums = 0, checksumspace = 0;
 	int i, j, rv, uselist, count, hasfailed;
 	int *failures;
 
 	line = msg;
 	while (line && *line) {
-		if (!(checksums = reallocarray(checksums,
-		    nchecksums + 1, sizeof(*checksums))))
-			err(1, "realloc");
+		if (nchecksums == checksumspace) {
+			checksumspace = 2 * (nchecksums + 1);
+			if (!(checksums = reallocarray(checksums,
+			    checksumspace, sizeof(*checksums))))
+				err(1, "realloc");
+		}
 		c = &checksums[nchecksums++];
 		if ((endline = strchr(line, '\n')))
 			*endline++ = '\0';
-		rv = sscanf(line, "%255s %1023s = %1023s",
+		rv = sscanf(line, "%31s %1023s = %223s",
 		    c->algo, buf, c->hash);
 		if (rv != 3 || buf[0] != '(' || buf[strlen(buf) - 1] != ')')
 			errx(1, "unable to parse checksum line %s", line);
+		recodehash(c->hash);
 		buf[strlen(buf) - 1] = 0;
 		strlcpy(c->file, buf + 1, sizeof(c->file));
 		line = endline;
