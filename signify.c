@@ -759,8 +759,8 @@ main(int argc, char **argv)
 
 #ifndef VERIFYONLY
 	if (verb == CHECK) {
-		if (!pubkeyfile || !sigfile)
-			usage("must specify pubkey and sigfile");
+		if (!sigfile)
+			usage("must specify sigfile");
 		check(pubkeyfile, sigfile, quiet, argc, argv);
 		return 0;
 	}
