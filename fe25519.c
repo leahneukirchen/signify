@@ -1,4 +1,4 @@
-/* $OpenBSD: fe25519.c,v 1.3 2013/12/09 11:03:45 markus Exp $ */
+/* $OpenBSD$ */
 
 /*
  * Public Domain, Authors: Daniel J. Bernstein, Niels Duif, Tanja Lange,

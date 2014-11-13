@@ -1,4 +1,4 @@
-/* $OpenBSD: smult_curve25519_ref.c,v 1.2 2013/11/02 22:02:14 markus Exp $ */
+/* $OpenBSD$ */
 /*
 version 20081011
 Matthew Dempsky

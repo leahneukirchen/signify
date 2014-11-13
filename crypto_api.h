@@ -1,4 +1,4 @@
-/* $OpenBSD: crypto_api.h,v 1.3 2013/12/17 10:36:38 markus Exp $ */
+/* $OpenBSD$ */
 
 /*
  * Assembled from generated headers and source files by Markus Friedl.
@@ -10,7 +10,6 @@
 
 #include <stdint.h>
 #include <stdlib.h>
-#include <util.h>
 
 typedef int32_t crypto_int32;
 typedef uint32_t crypto_uint32;
