@@ -32,7 +32,6 @@
 
 #include "crypto_api.h"
 #ifndef VERIFY_ONLY
-#include <stdint.h>
 #include <stddef.h>
 #include <ohash.h>
 #endif
