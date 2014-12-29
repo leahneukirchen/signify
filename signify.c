@@ -235,7 +235,7 @@ writeb64file(const char *filename, const char *comment, const void *buf,
 	    COMMENTHDR, comment)) == -1 || nr >= sizeof(header))
 		errx(1, "comment too long");
 	writeall(fd, header, strlen(header), filename);
-	if ((rv = b64_ntop(buf, buflen, b64, sizeof(b64)-1)) == -1)
+	if ((rv = b64_ntop(buf, buflen, b64, sizeof(b64))) == -1)
 		errx(1, "base64 encode failed");
 	b64[rv++] = '\n';
 	writeall(fd, b64, rv, filename);
