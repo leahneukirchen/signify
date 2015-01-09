@@ -179,7 +179,7 @@ readmsg(const char *filename, unsigned long long *msglenp)
 			errx(1, "msg too large in %s", filename);
 		space = sb.st_size + 1;
 	} else {
-		space = 64 * 1024;
+		space = 64 * 1024 - 1;
 	}
 
 	msg = xmalloc(space + 1);
