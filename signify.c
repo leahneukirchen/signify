@@ -592,6 +592,9 @@ verifychecksums(char *msg, int argc, char **argv, int quiet)
 	while (line && *line) {
 		if ((endline = strchr(line, '\n')))
 			*endline++ = '\0';
+#if PATH_MAX < 1024 || HASHBUFSIZE < 224
+#error sizes are wrong
+#endif
 		rv = sscanf(line, "%31s (%1023s = %223s",
 		    c.algo, c.file, c.hash);
 		if (rv != 3 || c.file[0] == 0 || c.file[strlen(c.file)-1] != ')')
