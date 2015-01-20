@@ -18,11 +18,14 @@
 
 #include <arpa/inet.h>
 
+#include <limits.h>
 #include <stdint.h>
 #include <fcntl.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stddef.h>
+#include <ohash.h>
 #include <err.h>
 #include <unistd.h>
 #include <readpassphrase.h>
@@ -30,10 +33,6 @@
 #include <sha2.h>
 
 #include "crypto_api.h"
-#ifndef VERIFY_ONLY
-#include <stddef.h>
-#include <ohash.h>
-#endif
 
 #define SIGBYTES crypto_sign_ed25519_BYTES
 #define SECRETBYTES crypto_sign_ed25519_SECRETKEYBYTES
@@ -180,7 +179,7 @@ readmsg(const char *filename, unsigned long long *msglenp)
 			errx(1, "msg too large in %s", filename);
 		space = sb.st_size + 1;
 	} else {
-		space = 64 * 1024;
+		space = 64 * 1024 - 1;
 	}
 
 	msg = xmalloc(space + 1);
@@ -508,7 +507,7 @@ verify(const char *pubkeyfile, const char *msgfile, const char *sigfile,
 #ifndef VERIFYONLY
 #define HASHBUFSIZE 224
 struct checksum {
-	char file[1024];
+	char file[PATH_MAX];
 	char hash[HASHBUFSIZE];
 	char algo[32];
 };
@@ -592,11 +591,13 @@ verifychecksums(char *msg, int argc, char **argv, int quiet)
 	while (line && *line) {
 		if ((endline = strchr(line, '\n')))
 			*endline++ = '\0';
-		rv = sscanf(line, "%31s (%1023s = %223s",
+#if PATH_MAX < 1024 || HASHBUFSIZE < 224
+#error sizes are wrong
+#endif
+		rv = sscanf(line, "%31s (%1023[^)]) = %223s",
 		    c.algo, c.file, c.hash);
-		if (rv != 3 || c.file[0] == 0 || c.file[strlen(c.file)-1] != ')')
+		if (rv != 3)
 			errx(1, "unable to parse checksum line %s", line);
-		c.file[strlen(c.file) - 1] = '\0';
 		line = endline;
 		if (argc) {
 			slot = ohash_qlookup(&myh, c.file);
@@ -648,7 +649,7 @@ main(int argc, char **argv)
 {
 	const char *pubkeyfile = NULL, *seckeyfile = NULL, *msgfile = NULL,
 	    *sigfile = NULL;
-	char sigfilebuf[1024];
+	char sigfilebuf[PATH_MAX];
 	const char *comment = "signify";
 	int ch, rounds;
 	int embedded = 0;
