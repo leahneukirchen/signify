@@ -14,7 +14,7 @@ int RAND_bytes(unsigned char *buf, int num)
 	close(fd);
 
 	if (r != num)
-		return 1;
-	else
 		return 0;
+	else
+		return 1;
 }
